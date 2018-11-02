@@ -1,28 +1,57 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import { connect } from 'react-redux';
 import './App.css';
+import { AddButton } from './add-button';
+import { addNewItem,deleteItem } from './redux/action';
+import { ShowList } from './show-list.js';
 
 class App extends Component {
+
+  constructor(){
+    super();
+    this.state = {
+      input: ''
+    }
+  }
+
+  handleChange = e => {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+
+  addToList = () => {
+    this.props.addNewItem(this.state.input);
+  }
+
+  deleteItem = i => {
+    this.props.deleteItem(i);
+  }
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        Can you see me?
+        <AddButton
+          userInput={this.state.input}
+          onUserInputChange={this.handleChange}
+          add={this.addToList}
+        />
+        <ShowList list={this.props.list} del={this.deleteItem} />
       </div>
     );
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    list: state.list
+  }
+}
+
+const mapDispatchToProps = {
+  addNewItem,
+  deleteItem
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
