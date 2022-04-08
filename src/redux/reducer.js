@@ -1,24 +1,23 @@
 const initState = {
-  list: []
-}
+  list: [],
+};
 
-const reducer = (state=initState, actions) => {
-  switch(actions.type){
-    case "ADD_NEW_ITEM":
+// eslint-disable-next-line default-param-last
+const reducer = (state = initState, actions) => {
+  switch (actions.type) {
+    case 'ADD_NEW_ITEM':
       return {
         ...state,
-        list: [...state.list,actions.payload.item]
-      }
-    case "DELETE_ITEM":
-      const listCopy = [...state.list];
-      listCopy.splice(actions.payload.index,1);
+        list: [...state.list, actions.payload.item],
+      };
+    case 'DELETE_ITEM':
       return {
         ...state,
-        list: listCopy
-      }
+        list: state.list.filter((_, i) => i !== actions.payload.index),
+      };
     default:
       return state;
   }
-}
+};
 
 export default reducer;
