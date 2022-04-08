@@ -25,6 +25,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@swc/core": "^1.2.164",
     "@swc/jest": "^0.2.20",
     "@testing-library/react": "^13.0.0",
     "css-loader": "^6.7.1",
